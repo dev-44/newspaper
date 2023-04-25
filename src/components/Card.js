@@ -4,7 +4,6 @@ import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native'
 
 const Card = ({news}) => {
 
-    console.log({news})
 
 /*     const news = {
         title: 'On Island South of Taiwan, U.S. Prepares for Conflict With China...', 

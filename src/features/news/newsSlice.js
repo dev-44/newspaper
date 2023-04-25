@@ -10,9 +10,9 @@ const initialState = {
 }
 
 //Get all news
-export const getNews = createAsyncThunk('news/get', async(_, thunkAPI) => {
+export const getNews = createAsyncThunk('news/get', async(page, thunkAPI) => {
     try {
-        return await newsService.getNews()
+        return await newsService.getNews(page)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -34,7 +34,7 @@ export const newsSlice = createSlice({
             .addCase(getNews.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.news = action.payload
+                state.news = state.news.concat(action.payload)
             })
             .addCase(getNews.rejected, (state, action) => {
                 state.isLoading = false
