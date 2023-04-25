@@ -13,7 +13,8 @@ const getNews = async(page) => {
     } */
 
     const {data} = await axios.get(API_URL + `&page=${page}`)
-    return data.articles
+    let articles = data.articles
+    return articles
 }
 
 const newsService = {

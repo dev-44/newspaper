@@ -1,23 +1,21 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { useNavigation } from "@react-navigation/native";
 //import Animated, {Layout, RollInLeft, RollOutRight} from 'react-native-reanimated'
 
-const Card = ({news}) => {
+const Card = ({ news }) => {
 
+    const navigation = useNavigation();
+    const { title, description, urlToImage, url } = news
 
-/*     const news = {
-        title: 'On Island South of Taiwan, U.S. Prepares for Conflict With China...', 
-        description: 'Part of largest-ever annual drills with the Philippines focuses on defending strategic Bashi Channel', 
-        urlToImage: 'https://images.wsj.net/im-768786/social'
-    } */
-
-    const { title, description, urlToImage } = news
-
-    //console.log({title, description})
+    const onPress = () => {
+        navigation.navigate('Details', { url })
+    }
 
     return (
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.card}>
-                <Image source={{ uri: urlToImage}}  style={styles.image} />
+                <Image source={{ uri: urlToImage }}  style={styles.image} />
 
                 <View style={styles.container}>
                     <View style={styles.titleContainer}>
@@ -29,6 +27,7 @@ const Card = ({news}) => {
                     </View>
                 </View>
             </View>
+        </TouchableOpacity>
     )
 }
 

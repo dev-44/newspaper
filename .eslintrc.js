@@ -18,6 +18,7 @@ module.exports = {
         'react/self-closing-comp': 0,
         'no-trailing-spaces': 0,
         quotes: 0,
+        'jsx-quotes': 0,
       },
     },
   ],
