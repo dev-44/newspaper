@@ -1,15 +1,32 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from "@react-navigation/native";
-//import Animated, {Layout, RollInLeft, RollOutRight} from 'react-native-reanimated'
 
-const Card = ({ news }) => {
+interface News {
+    title: string;
+    description: string;
+    urlToImage: string;
+    url: string;
+    [key: string]: string | unknown;
+}
 
-    const navigation = useNavigation();
+type StackParamList = {
+    Home: undefined;
+    Details: { url: string };
+};
+
+
+type StackNavProp = StackNavigationProp<StackParamList, 'Details'>;
+
+
+const Card: React.FC<{ news: News }> = ({ news }): JSX.Element => {
+
+    const navigation = useNavigation<StackNavProp>();
     const { title, description, urlToImage, url } = news
 
     const onPress = () => {
-        navigation.navigate('Details', { url })
+        navigation.navigate('Details', { url });
     }
 
     return (

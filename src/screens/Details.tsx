@@ -1,8 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { View, StyleSheet, Text, Image, Linking } from 'react-native'
-import { useSelector } from 'react-redux';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
-const DetailsScreen = ({ route }) => {
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store'
+
+
+type MyStackParamList = {
+    Details: { url: string };
+  };
+
+const Details: React.FC = (): JSX.Element => {
+
+    const route = useRoute<RouteProp<MyStackParamList, 'Details'>>();
 
     const [article, setArticle] = useState({
         title: '',
@@ -12,14 +22,17 @@ const DetailsScreen = ({ route }) => {
         source: ''
     })
 
-    const { news } = useSelector(state => state.news)
+    const { news } = useSelector((state: RootState) => state.news);
     const { url } = route.params
 
     const findMatch = () => {
         let match = news.find(item => item.url === url)
-        const { title, description, urlToImage, content, source } = match
-        const { name } = source
-        setArticle({ title, description, urlToImage, content, source: name })
+
+        if (match && match.source) {
+            const { title, description, urlToImage, content, source } = match;
+            const { name } = source;
+            setArticle({ title, description, urlToImage, content, source: name });
+          }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,9 +96,9 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         color: '#000',
         flexShrink: 1,
+        textAlign: 'justify'
     },
     text: {
-        marginLeft: 10,
         flexShrink: 1,
         marginTop: 15,
     },
@@ -93,11 +106,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "#575757",
         fontStyle: 'italic',
+        textAlign: 'justify'
     },
     content: {
         fontSize: 13,
         color: "#575757",
-        marginTop: 10
+        marginTop: 10,
+        textAlign: 'justify'
     },
     footer: {
         flexShrink: 1,
@@ -107,7 +122,6 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: "#575757",
         marginTop: 10,
-        marginEnd: 10,
         alignSelf: 'flex-end',
     },
     link: {
@@ -116,4 +130,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default DetailsScreen
+export default Details

@@ -4,24 +4,23 @@ import {
   StyleSheet,
   View,
   Text,
-  StatusBar,
 } from 'react-native';
 
 import { useSelector } from 'react-redux';
+import { RootState } from '../app/store'
 
 import CardList from '../components/CardList';
 
-const HomeScreen = () => {
+const Home: React.FC = (): JSX.Element => {
 
-  const { errorMessage } = useSelector(state => state.news)
+  const { errorMessage } = useSelector((state: RootState) => state.news)
 
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
       <SafeAreaView style={styles.container}>
         
         {errorMessage ? <Text>{errorMessage}</Text> : null}
-        <CardList/>
+        <CardList />
           
       </SafeAreaView>
     </View>
@@ -34,4 +33,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+export default Home;
