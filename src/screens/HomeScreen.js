@@ -21,7 +21,7 @@ const HomeScreen = () => {
       <SafeAreaView style={styles.container}>
         
         {errorMessage ? <Text>{errorMessage}</Text> : null}
-        <CardList />
+        <CardList/>
           
       </SafeAreaView>
     </View>

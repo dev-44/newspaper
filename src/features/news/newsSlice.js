@@ -10,9 +10,9 @@ const initialState = {
 }
 
 //Get all news
-export const getNews = createAsyncThunk('news/get', async(page, thunkAPI) => {
+export const getNews = createAsyncThunk('news/get', async(_, thunkAPI) => {
     try {
-        return await newsService.getNews(page)
+        return await newsService.getNews()
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)

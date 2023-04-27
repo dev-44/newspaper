@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { View, StyleSheet, Text, Image, Linking } from 'react-native'
 import { useSelector } from 'react-redux';
 
@@ -15,15 +15,16 @@ const DetailsScreen = ({ route }) => {
     const { news } = useSelector(state => state.news)
     const { url } = route.params
 
-    useEffect(() => {
-        if (news.length && url) {
-            let match = news.find(item => item.url === url)
-            const { title, description, urlToImage, content, source } = match
-            const { name } = source
-            setArticle({ title, description, urlToImage, content, source: name })
-        }
-    },[news, url])
+    const findMatch = () => {
+        let match = news.find(item => item.url === url)
+        const { title, description, urlToImage, content, source } = match
+        const { name } = source
+        setArticle({ title, description, urlToImage, content, source: name })
+    }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useMemo(() => findMatch(),[url])
+ 
     return (
         <View style={styles.card}>
             <View style={styles.header}>

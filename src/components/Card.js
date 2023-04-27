@@ -15,7 +15,11 @@ const Card = ({ news }) => {
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.card}>
-                <Image source={{ uri: urlToImage }}  style={styles.image} />
+                <Image 
+                    defaultSource={require('../assets/newspaper.png')}
+                    source={{ uri: urlToImage }}  
+                    style={styles.image} 
+                />
 
                 <View style={styles.container}>
                     <View style={styles.titleContainer}>

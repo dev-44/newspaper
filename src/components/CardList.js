@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,6 +6,8 @@ import {
   ActivityIndicator,
   FlatList
 } from 'react-native';
+
+import { FlashList } from "@shopify/flash-list";
 
 import Card from './Card';
 
@@ -21,13 +23,15 @@ const CardList = () => {
 
   useEffect(() => {
 
-    if (page < 10) {
-      dispatch(getNews(page))
+    /*if (page < 5) {
+      dispatch(getNews())
       console.log('CALL')
-    }
+    } */
+
+    dispatch(getNews())
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page])
+  }, [])
 
   const renderFooter = () => {
     return (
@@ -53,22 +57,14 @@ const CardList = () => {
 
 
   return (
-    <View>
-        {news.length ? (
-          <FlatList 
-            data={news}
-            renderItem={({item}) => {
-              return <Card news={item} />
-            }}
-            keyExtractor={(_, index) => index.toString()}
-            ListEmptyComponent={renderEmpty}
-            ListFooterComponent={renderFooter}
-            onEndReachedThreshold={0}
-            onEndReached={renderMoreData}
-          />         
-        ) : null}
-        {/* {news.length ? news.map((item, index) => <Card key={index} news={item} /> ) : null} */}
-    </View>
+
+        <FlashList
+          data={news}
+          renderItem={({item}) => {
+            return <Card news={item} />
+          }}
+          estimatedItemSize={100}
+        />
   );
 };
 
@@ -84,4 +80,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CardList;
+export default memo(CardList);
